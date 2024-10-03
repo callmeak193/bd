@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Invitation Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("qSbEbznRR8vm2Jpw-"); // Initialize EmailJS with your public key
+        })();
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap'); /* Importing a custom font */
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230315/pngtree-birthday-party-balloon-decoration-background-image_1948375.jpg'); /* Add your professional background image URL here */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            animation: fadeIn 1s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Gradient for form background */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.7); /* Added inset shadow for lighting effect */
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .container:hover {
+            transform: scale(1.02); /* Scale effect on hover */
+        }
+        
+        h2 {
+            color: #ff6347;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif; /* Applying custom font */
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            border-color: #ff6347; /* Change border color on focus */
+            outline: none;
+        }
+        
+        button {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        button:hover {
+            background-color: #ff4500;
+            transform: translateY(-2px); /* Button lift effect on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Birthday Invitation</h2>
+        <form id="invitationForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" rows="4" required></textarea> <!-- Message box added -->
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("invitationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Call the sendMail function to send the email
+            sendMail();
+        });
+
+        // Function to send email
+        function sendMail() {
+            var params = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value // Include message
+            };
+            
+            const serviceID = "service_36yztvs";  // Replace with your actual service ID
+            const templateID = "template_9b2x06q";  // Replace with your actual template ID
+
+            emailjs.send(serviceID, templateID, params)
+            .then((res) => {
+                document.getElementById("invitationForm").reset(); // Clear the form after sending
+                console.log("Success:", res.status, res.text);
+                alert("Your message was sent successfully");
+            })
+            .catch((err) => {
+                console.log("Failed to send message. Error:", err);
+                alert("There was an error sending your message");
+            });
+        }
+    </script>
+</body>
+</html>
